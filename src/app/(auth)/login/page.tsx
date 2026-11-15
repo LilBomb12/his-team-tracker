@@ -48,8 +48,9 @@ export default function LoginPage() {
             <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
           </div>
           <Button type="submit" className="w-full" disabled={loading}>{loading ? t("loading") : t("sign_in")}</Button>
-          <div className="text-center text-sm">
-            <a href="/forgot-password" className="text-primary hover:underline">{t("forgot_password")}</a>
+          <div className="text-center text-sm space-y-1">
+            <a href="/forgot-password" className="text-primary hover:underline block">{t("forgot_password")}</a>
+            <a href="/signup" className="text-primary hover:underline block">إنشاء حساب جديد</a>
           </div>
         </form>
       </CardContent>
