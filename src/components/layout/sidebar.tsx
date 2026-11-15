@@ -11,12 +11,8 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { href: "/dashboard", key: "dashboard", icon: LayoutDashboard },
   { href: "/staff", key: "staff_directory", icon: Users },
-  { href: "/interactions", key: "interactions", icon: FileText },
-  { href: "/followups", key: "followups", icon: ClipboardList },
   { href: "/escalations", key: "escalations", icon: AlertTriangle },
   { href: "/analytics", key: "analytics", icon: BarChart3 },
-  { href: "/departments", key: "departments", icon: Building2 },
-  { href: "/users", key: "users_roles", icon: UserCog },
   { href: "/notifications", key: "notifications", icon: Bell },
   { href: "/activity", key: "activity_logs", icon: Activity },
   { href: "/settings", key: "settings", icon: Settings },

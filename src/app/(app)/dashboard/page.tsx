@@ -106,11 +106,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
-      <div className="grid md:grid-cols-2 gap-4">
-        <Card>
-          <CardHeader><CardTitle>{t("upcoming_followups")}</CardTitle></CardHeader>
-          <CardContent><Link href="/followups" className="text-primary hover:underline">View</Link></CardContent>
-        </Card>
+      <div className="grid md:grid-cols-1 gap-4">
         <Card>
           <CardHeader><CardTitle>{t("escalation_drafts_pending")}</CardTitle></CardHeader>
           <CardContent><Link href="/escalations" className="text-primary hover:underline">View</Link></CardContent>

@@ -54,6 +54,21 @@ export default function StaffPage() {
     (s.his_user_id ?? "").toLowerCase().includes(q.toLowerCase())
   );
 
+  const adjustScore = async (s: StaffMember, delta: number) => {
+    const newScore = (s.manual_score ?? 0) + delta;
+    setStaff((prev) => prev.map((x) => (x.id === s.id ? { ...x, manual_score: newScore } : x)));
+    const { hasSupabaseEnv } = await import("@/lib/env");
+    if (s.id.startsWith("demo-") || !hasSupabaseEnv()) return;
+    const supabase = (await import("@/lib/supabase/client")).createClient();
+    await supabase.from("staff_members").update({ manual_score: newScore }).eq("id", s.id);
+    await supabase.from("audit_logs").insert({
+      action: "manual_score_adjustment",
+      entity_type: "staff_member",
+      entity_id: s.id,
+      new_values: { delta },
+    });
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -95,8 +110,8 @@ export default function StaffPage() {
                   <tr className="border-b text-muted-foreground">
                     <th className="text-start p-2">{t("full_name")}</th>
                     <th className="text-start p-2">{t("job_type")}</th>
-                    <th className="text-start p-2">{t("department")}</th>
                     <th className="text-start p-2">{t("his_user_id")}</th>
+                    <th className="text-start p-2">Score</th>
                     <th className="text-start p-2">{t("status")}</th>
                     <th className="text-start p-2">{t("actions")}</th>
                   </tr>
@@ -106,8 +121,14 @@ export default function StaffPage() {
                     <tr key={s.id} className="border-b hover:bg-muted/50">
                       <td className="p-2 font-medium">{s.full_name}</td>
                       <td className="p-2">{s.job_type}</td>
-                      <td className="p-2">{s.department?.name_ar || s.department?.name_en || "-"}</td>
                       <td className="p-2">{s.his_user_id || "-"}</td>
+                      <td className="p-2">
+                        <div className="flex flex-col items-center gap-1">
+                          <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white h-7 px-3" onClick={() => adjustScore(s, 1)}>+1</Button>
+                          <span className="font-bold text-lg">{s.manual_score ?? 0}</span>
+                          <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white h-7 px-3" onClick={() => adjustScore(s, -1)}>-1</Button>
+                        </div>
+                      </td>
                       <td className="p-2">
                         <Badge variant={s.registration_status === "registered" ? "success" : "warning"}>{s.registration_status}</Badge>
                       </td>
