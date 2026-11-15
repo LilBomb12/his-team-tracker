@@ -37,7 +37,7 @@ export default function SettingsPage() {
       </Card>
       <Card>
         <CardContent className="pt-6">
-          <Button variant="destructive" onClick={signOut}>{t("logout")}</Button>
+          <p className="text-sm text-muted-foreground">Demo mode — no authentication required.</p>
         </CardContent>
       </Card>
     </div>

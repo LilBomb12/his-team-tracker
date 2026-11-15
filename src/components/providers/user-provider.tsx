@@ -28,7 +28,14 @@ export function UserProvider({ children }: { children: ReactNode }) {
       const { data: p } = await supabase.from("profiles").select("*").eq("id", u.id).single();
       setProfile(p as Profile | null);
     } else {
-      setProfile(null);
+      setProfile({
+        id: "demo-admin",
+        email: "demo@local",
+        full_name: "Demo Admin",
+        role: "admin",
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      } as Profile);
     }
     setLoading(false);
   };

@@ -41,11 +41,8 @@ export function Sidebar({ collapsed }: { collapsed?: boolean }) {
           );
         })}
       </nav>
-      <div className="p-2 border-t">
-        <Button variant="ghost" className="w-full justify-start gap-3" onClick={() => {}}>
-          <LogOut className="h-4 w-4" />
-          {!collapsed && <span>{t("logout")}</span>}
-        </Button>
+      <div className="p-2 border-t text-xs text-muted-foreground text-center">
+        Demo mode (no login)
       </div>
     </aside>
   );
